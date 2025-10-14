@@ -1,6 +1,7 @@
 import subprocess
 import os
 import time
+import csv
 
 def open_photoshop():
     # AppleScript command to open Adobe Photoshop
@@ -18,7 +19,7 @@ def open_photoshop():
 
 def open_file_in_photoshop():
     # Path to the file you want to open\
-    file_path = os.path.expanduser("~/Desktop/DSC04328.PSD")
+    file_path = os.path.expanduser("~/Desktop/sticker_test/sticker_test.PSD")
 
 
     # check if file exists
@@ -63,9 +64,59 @@ def replace_text_layer(layer_name="line_1", new_text="Hello"):
     except subprocess.CalledProcessError as e:
         print("Failed to update layer text:", e)
 
+def save_psd_as(sku):
+    output_name = sku
+    output_path = os.path.expanduser(f"~/Desktop/sticker_test/exports/{output_name}")
+
+    applescript = f'''
+    tell application "Adobe Photoshop 2025"
+        activate
+        set docRef to current document
+        save docRef as Photoshop format in file "{output_path}"
+    end tell
+    '''
+    try:
+        subprocess.run(["osascript", "-e", applescript], check=True)
+        print(f"File saved as: {output_path}")
+    except subprocess.CalledProcessError as e:
+        print("Failed to save file:", e)
+
+def close_current_document():
+    applescript = '''
+    tell application "Adobe Photoshop 2025"
+        activate
+        close current document saving no
+    end tell
+    '''
+    try:
+        subprocess.run(["osascript", "-e", applescript], check=True)
+        print("Current document closed.")
+    except subprocess.CalledProcessError as e:
+        print("Failed to close document:", e)
+
+def process_csv_and_generate_psd_files():
+    csv_path = os.path.expanduser("~/Desktop/sticker_test/state_combinations.csv")
+    with open (csv_path, newline='') as csvfile:
+        reader = csv.DictReader(csvfile)
+        for i, row in enumerate(reader):
+            if i >= 5:
+                break
+            state1 = row['State1']
+            state2 = row['State2']
+            sku = row['SKU']
+
+            open_file_in_photoshop()
+            time.sleep(1)  # slight delay if Photoshop is still launching
+            replace_text_layer("line_1", state1)
+            replace_text_layer("line_2", state2)
+            save_psd_as(sku)
+            close_current_document()
+
 if __name__ == "__main__":
     #open_photoshop()
-    open_file_in_photoshop()
-    time.sleep(1)  # slight delay if Photoshop is still launching
-    replace_text_layer("line_1", "Hello")
-    replace_text_layer("line_2", "World")
+    # open_file_in_photoshop()
+    # time.sleep(1)  # slight delay if Photoshop is still launching
+    # replace_text_layer("line_1", "Hello")
+    # replace_text_layer("line_2", "World")
+    # save_psd_as()
+    process_csv_and_generate_psd_files()
