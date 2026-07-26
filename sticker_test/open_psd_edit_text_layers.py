@@ -271,23 +271,23 @@ def process_csv_and_generate_psd_files():
             sku = row['SKU']
 
             open_file_in_photoshop()
-            time.sleep(1.5)  # delay for file to open
+            time.sleep(1)  # delay for file to open
             replace_text_layer("line_1", state1.upper())
             time.sleep(0.3)
             replace_text_layer("line_2", state2.upper())
             time.sleep(0.3)
             save_psd_as(sku + "-RED")
-            time.sleep(1)
+            time.sleep(.5)
             set_background_color_to_blue()
             time.sleep(0.3)
             save_psd_as(sku + "-BLU")
-            time.sleep(1)
+            time.sleep(.5)
             set_background_color_to_black()
             time.sleep(0.3)
             save_psd_as(sku + "-BLK")
-            time.sleep(1)
+            time.sleep(.5)
             create_three_up_composite(sku)
-            time.sleep(1)
+            time.sleep(.5)
             close_current_document()
 
 if __name__ == "__main__":
