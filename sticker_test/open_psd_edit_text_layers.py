@@ -6,7 +6,7 @@ import csv
 def open_photoshop():
     # AppleScript command to open Adobe Photoshop
     applescript = '''
-    tell application "Adobe Photoshop 2025"
+    tell application "Adobe Photoshop 2026"
         activate
     end tell
     '''
@@ -18,9 +18,9 @@ def open_photoshop():
         print("Failed to launch Photoshop:", e)
 
 def open_file_in_photoshop():
-    # Path to the file you want to open\
-    file_path = os.path.expanduser("~/Desktop/sticker_test/sticker_test.PSD")
-
+    # Path to the file you want to open
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    file_path = os.path.join(script_dir, "sticker_test.PSD")
 
     # check if file exists
     if not os.path.isfile(file_path):
@@ -32,7 +32,7 @@ def open_file_in_photoshop():
 
     #applescript to open file in photoshop
     applescript = f'''
-    tell application "Adobe Photoshop 2025"
+    tell application "Adobe Photoshop 2026"
         open alias "{hfs_path}"
         activate
     end tell
@@ -46,7 +46,7 @@ def open_file_in_photoshop():
 
 def replace_text_layer(layer_name="line_1", new_text="Hello"):
     applescript = f'''
-    tell application "Adobe Photoshop 2025"
+    tell application "Adobe Photoshop 2026"
         activate
         try
             tell current document
@@ -66,10 +66,16 @@ def replace_text_layer(layer_name="line_1", new_text="Hello"):
 
 def save_psd_as(sku):
     output_name = sku
-    output_path = os.path.expanduser(f"~/Desktop/sticker_test/exports/{output_name}")
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    exports_dir = os.path.join(script_dir, "exports")
+    
+    # Create exports directory if it doesn't exist
+    os.makedirs(exports_dir, exist_ok=True)
+    
+    output_path = os.path.join(exports_dir, f"{output_name}.psd")
 
     applescript = f'''
-    tell application "Adobe Photoshop 2025"
+    tell application "Adobe Photoshop 2026"
         activate
         set docRef to current document
         save docRef as Photoshop format in file "{output_path}"
@@ -83,7 +89,7 @@ def save_psd_as(sku):
 
 def set_background_color_to_black():
     apple_script = '''
-        tell application "Adobe Photoshop 2025"
+        tell application "Adobe Photoshop 2026"
             tell current document
                 set js to "
                     var doc = app.activeDocument;
@@ -122,7 +128,7 @@ def set_background_color_to_black():
 
 def set_background_color_to_blue():
     apple_script = '''
-        tell application "Adobe Photoshop 2025"
+        tell application "Adobe Photoshop 2026"
             tell current document
                 set js to "
                     var doc = app.activeDocument;
@@ -161,7 +167,7 @@ def set_background_color_to_blue():
 
 def close_current_document():
     applescript = '''
-    tell application "Adobe Photoshop 2025"
+    tell application "Adobe Photoshop 2026"
         activate
         close current document saving no
     end tell
@@ -172,26 +178,116 @@ def close_current_document():
     except subprocess.CalledProcessError as e:
         print("Failed to close document:", e)
 
+def create_three_up_composite(sku):
+    """Create a vertically-stacked composite (RED on top, BLU middle, BLK bottom)
+    using the currently open BLK document as the base."""
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    exports_dir = os.path.join(script_dir, "exports")
+
+    red_path = os.path.join(exports_dir, f"{sku}-RED.psd")
+    blu_path = os.path.join(exports_dir, f"{sku}-BLU.psd")
+    output_path = os.path.join(exports_dir, f"{sku}-3UP.psd")
+
+    jsx_path = os.path.join(script_dir, "_composite_temp.jsx")
+
+    jsx_code = f'''
+app.preferences.rulerUnits = Units.PIXELS;
+
+var baseDoc = app.activeDocument;
+var origWidth = baseDoc.width.value;
+var origHeight = baseDoc.height.value;
+
+var buffer = origHeight * 0.1;
+var spacing = origHeight * 0.05;
+var newWidth = origWidth + (buffer * 2);
+var newHeight = (origHeight * 3) + (buffer * 2) + (spacing * 2);
+
+// Flatten baseDoc (BLK) FIRST so it's a single layer too, then resize/position it
+baseDoc.flatten();
+baseDoc.resizeCanvas(newWidth, newHeight, AnchorPosition.TOPLEFT);
+
+var blkOffsetX = buffer;
+var blkOffsetY = buffer + (origHeight * 2) + (spacing * 2);
+var blkLayer = baseDoc.layers[0];
+blkLayer.isBackgroundLayer = false;
+blkLayer.translate(blkOffsetX, blkOffsetY);
+
+// RED: open, flatten to one layer, duplicate that single layer into baseDoc
+var redDoc = app.open(new File("{red_path}"));
+redDoc.flatten();
+var redLayer = redDoc.layers[0].duplicate(baseDoc, ElementPlacement.PLACEATBEGINNING);
+redDoc.close(SaveOptions.DONOTSAVECHANGES);
+redLayer.isBackgroundLayer = false;
+redLayer.translate(buffer, buffer);
+
+// BLU: same treatment, middle slot
+var bluDoc = app.open(new File("{blu_path}"));
+bluDoc.flatten();
+var bluLayer = bluDoc.layers[0].duplicate(baseDoc, ElementPlacement.PLACEATBEGINNING);
+bluDoc.close(SaveOptions.DONOTSAVECHANGES);
+bluLayer.isBackgroundLayer = false;
+var bluOffsetY = buffer + origHeight + spacing;
+bluLayer.translate(buffer, bluOffsetY);
+
+baseDoc.flatten();
+baseDoc.saveAs(new File("{output_path}"), new PhotoshopSaveOptions(), true);
+'''
+
+    with open(jsx_path, "w") as f:
+        f.write(jsx_code)
+
+    applescript = f'''
+    tell application "Adobe Photoshop 2026"
+        activate
+        do javascript file "{jsx_path}"
+    end tell
+    '''
+
+    result = subprocess.run(
+        ["osascript", "-e", applescript],
+        capture_output=True, text=True
+    )
+    if result.returncode != 0:
+        print("Failed to create 3-up composite.")
+        print("---- AppleScript stderr ----")
+        print(result.stderr)
+    else:
+        print(f"Vertical composite created: {output_path}")
+
+    if os.path.exists(jsx_path):
+        os.remove(jsx_path)
+
+
 def process_csv_and_generate_psd_files():
-    csv_path = os.path.expanduser("~/Desktop/sticker_test/state_combinations.csv")
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    csv_path = os.path.join(script_dir, "state_combinations.csv")
     with open (csv_path, newline='') as csvfile:
         reader = csv.DictReader(csvfile)
         for i, row in enumerate(reader):
-            if i >= 50:
+            if i >= 2:
                 break
             state1 = row['State1']
             state2 = row['State2']
             sku = row['SKU']
 
             open_file_in_photoshop()
-            time.sleep(1)  # slight delay if Photoshop is still launching
+            time.sleep(1.5)  # delay for file to open
             replace_text_layer("line_1", state1.upper())
+            time.sleep(0.3)
             replace_text_layer("line_2", state2.upper())
+            time.sleep(0.3)
             save_psd_as(sku + "-RED")
+            time.sleep(1)
             set_background_color_to_blue()
+            time.sleep(0.3)
             save_psd_as(sku + "-BLU")
+            time.sleep(1)
             set_background_color_to_black()
+            time.sleep(0.3)
             save_psd_as(sku + "-BLK")
+            time.sleep(1)
+            create_three_up_composite(sku)
+            time.sleep(1)
             close_current_document()
 
 if __name__ == "__main__":
