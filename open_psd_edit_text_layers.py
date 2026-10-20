@@ -6,7 +6,7 @@ import csv
 def open_photoshop():
     # AppleScript command to open Adobe Photoshop
     applescript = '''
-    tell application "Adobe Photoshop 2025"
+    tell application "Adobe Photoshop 2026"
         activate
     end tell
     '''
@@ -17,22 +17,16 @@ def open_photoshop():
     except subprocess.CalledProcessError as e:
         print("Failed to launch Photoshop:", e)
 
-def open_file_in_photoshop():
-    # Path to the file you want to open\
-    file_path = os.path.expanduser("~/Desktop/sticker_test/sticker_test.PSD")
-
-
-    # check if file exists
+def open_file_in_photoshop(file_path):
     if not os.path.isfile(file_path):
         print(f"File does not exist: {file_path}")
         return
 
-    # convert POSIX path to HFS path (colon-delimited)
     hfs_path = file_path.replace("/", ":")[1:]
 
     #applescript to open file in photoshop
     applescript = f'''
-    tell application "Adobe Photoshop 2025"
+    tell application "Adobe Photoshop 2026"
         open alias "{hfs_path}"
         activate
     end tell
@@ -46,7 +40,7 @@ def open_file_in_photoshop():
 
 def replace_text_layer(layer_name="line_1", new_text="Hello"):
     applescript = f'''
-    tell application "Adobe Photoshop 2025"
+    tell application "Adobe Photoshop 2026"
         activate
         try
             tell current document
@@ -65,14 +59,17 @@ def replace_text_layer(layer_name="line_1", new_text="Hello"):
         print("Failed to update layer text:", e)
 
 def save_psd_as(sku):
-    output_name = sku
-    output_path = os.path.expanduser(f"~/Desktop/sticker_test/exports/{output_name}")
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    exports_dir = os.path.join(script_dir, "sticker_test", "exports")
+    os.makedirs(exports_dir, exist_ok=True)
+
+    output_path = os.path.join(exports_dir, f"{sku}.psd")
 
     applescript = f'''
-    tell application "Adobe Photoshop 2025"
+    tell application "Adobe Photoshop 2026"
         activate
-        set docRef to current document
-        save docRef as Photoshop format in file "{output_path}"
+        set outputFile to POSIX file "{output_path}"
+        save current document in outputFile as Photoshop format
     end tell
     '''
     try:
@@ -83,9 +80,11 @@ def save_psd_as(sku):
 
 def close_current_document():
     applescript = '''
-    tell application "Adobe Photoshop 2025"
+    tell application "Adobe Photoshop 2026"
         activate
-        close current document saving no
+        if (count of documents) > 0 then
+            close document 1 saving no
+        end if
     end tell
     '''
     try:
@@ -95,17 +94,21 @@ def close_current_document():
         print("Failed to close document:", e)
 
 def process_csv_and_generate_psd_files():
-    csv_path = os.path.expanduser("~/Desktop/sticker_test/state_combinations.csv")
-    with open (csv_path, newline='') as csvfile:
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    csv_path = os.path.join(script_dir, "sticker_test", "state_combinations.csv")
+    file_path = os.path.join(script_dir, "sticker_test", "sticker_test.psd")
+
+    with open(csv_path, newline="") as csvfile:
         reader = csv.DictReader(csvfile)
         for i, row in enumerate(reader):
             if i >= 5:
                 break
-            state1 = row['State1']
-            state2 = row['State2']
-            sku = row['SKU']
 
-            open_file_in_photoshop()
+            state1 = row["State1"]
+            state2 = row["State2"]
+            sku = row["SKU"]
+
+            open_file_in_photoshop(file_path)
             time.sleep(1)  # slight delay if Photoshop is still launching
             replace_text_layer("line_1", state1)
             replace_text_layer("line_2", state2)
