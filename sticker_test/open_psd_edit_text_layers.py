@@ -6,7 +6,7 @@ import csv
 def open_photoshop():
     # AppleScript command to open Adobe Photoshop
     applescript = '''
-    tell application "Adobe Photoshop 2026"
+    tell application "Adobe Photoshop 2027"
         activate
     end tell
     '''
@@ -32,7 +32,7 @@ def open_file_in_photoshop():
 
     #applescript to open file in photoshop
     applescript = f'''
-    tell application "Adobe Photoshop 2026"
+    tell application "Adobe Photoshop 2027"
         open alias "{hfs_path}"
         activate
     end tell
@@ -46,7 +46,7 @@ def open_file_in_photoshop():
 
 def replace_text_layer(layer_name="line_1", new_text="Hello"):
     applescript = f'''
-    tell application "Adobe Photoshop 2026"
+    tell application "Adobe Photoshop 2027"
         activate
         try
             tell current document
@@ -75,7 +75,7 @@ def save_psd_as(sku):
     output_path = os.path.join(exports_dir, f"{output_name}.psd")
 
     applescript = f'''
-    tell application "Adobe Photoshop 2026"
+    tell application "Adobe Photoshop 2027"
         activate
         set docRef to current document
         save docRef as Photoshop format in file "{output_path}"
@@ -89,7 +89,7 @@ def save_psd_as(sku):
 
 def set_background_color_to_black():
     apple_script = '''
-        tell application "Adobe Photoshop 2026"
+        tell application "Adobe Photoshop 2027"
             tell current document
                 set js to "
                     var doc = app.activeDocument;
@@ -128,7 +128,7 @@ def set_background_color_to_black():
 
 def set_background_color_to_blue():
     apple_script = '''
-        tell application "Adobe Photoshop 2026"
+        tell application "Adobe Photoshop 2027"
             tell current document
                 set js to "
                     var doc = app.activeDocument;
@@ -167,7 +167,7 @@ def set_background_color_to_blue():
 
 def close_current_document():
     applescript = '''
-    tell application "Adobe Photoshop 2026"
+    tell application "Adobe Photoshop 2027"
         activate
         close current document saving no
     end tell
@@ -202,14 +202,19 @@ var spacing = origHeight * 0.05;
 var newWidth = origWidth + (buffer * 2);
 var newHeight = (origHeight * 3) + (buffer * 2) + (spacing * 2);
 
-// Flatten baseDoc (BLK) FIRST so it's a single layer too, then resize/position it
-baseDoc.flatten();
-baseDoc.resizeCanvas(newWidth, newHeight, AnchorPosition.TOPLEFT);
 
-var blkOffsetX = buffer;
-var blkOffsetY = buffer + (origHeight * 2) + (spacing * 2);
+// Flatten BLK and convert Background to a normal layer BEFORE resizing
+baseDoc.flatten();
+
 var blkLayer = baseDoc.layers[0];
 blkLayer.isBackgroundLayer = false;
+
+// Resize canvas with transparent extra space
+baseDoc.resizeCanvas(newWidth, newHeight, AnchorPosition.TOPLEFT);
+
+// Position black sticker in bottom slot
+var blkOffsetX = buffer;
+var blkOffsetY = buffer + (origHeight * 2) + (spacing * 2);
 blkLayer.translate(blkOffsetX, blkOffsetY);
 
 // RED: open, flatten to one layer, duplicate that single layer into baseDoc
@@ -237,7 +242,7 @@ baseDoc.saveAs(new File("{output_path}"), new PhotoshopSaveOptions(), true);
         f.write(jsx_code)
 
     applescript = f'''
-    tell application "Adobe Photoshop 2026"
+    tell application "Adobe Photoshop 2027"
         activate
         do javascript file "{jsx_path}"
     end tell
@@ -264,8 +269,8 @@ def process_csv_and_generate_psd_files():
     with open (csv_path, newline='') as csvfile:
         reader = csv.DictReader(csvfile)
         for i, row in enumerate(reader):
-            if i >= 2:
-                break
+            if i % 33 != 0:
+                continue
             state1 = row['State1']
             state2 = row['State2']
             sku = row['SKU']
