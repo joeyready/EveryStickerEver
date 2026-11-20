@@ -1,0 +1,20 @@
+cat > .gitignore <<'EOF'
+# Photoshop and design source files
+*.psd
+*.psb
+*.ai
+*.xcf
+
+# macOS files
+.DS_Store
+**/.DS_Store
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Development workspace
+sticker_test/
+EOF

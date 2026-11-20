@@ -1,0 +1,230 @@
+[
+  {
+    "sku": "D-AK-M-KY"
+  },
+  {
+    "sku": "D-AK-M-WY"
+  },
+  {
+    "sku": "D-AL-M-AL"
+  },
+  {
+    "sku": "D-AL-M-ND"
+  },
+  {
+    "sku": "D-AR-M-KS"
+  },
+  {
+    "sku": "D-AR-M-WI"
+  },
+  {
+    "sku": "D-AZ-M-NC"
+  },
+  {
+    "sku": "D-CA-M-NY"
+  },
+  {
+    "sku": "D-CO-M-IA"
+  },
+  {
+    "sku": "D-CO-M-WV"
+  },
+  {
+    "sku": "D-CT-M-NM"
+  },
+  {
+    "sku": "D-DE-M-IN"
+  },
+  {
+    "sku": "D-DE-M-WA"
+  },
+  {
+    "sku": "D-FL-M-NJ"
+  },
+  {
+    "sku": "D-GA-M-IL"
+  },
+  {
+    "sku": "D-GA-M-VA"
+  },
+  {
+    "sku": "D-HI-M-NH"
+  },
+  {
+    "sku": "D-IA-M-NE"
+  },
+  {
+    "sku": "D-ID-M-ID"
+  },
+  {
+    "sku": "D-ID-M-VT"
+  },
+  {
+    "sku": "D-IL-M-NV"
+  },
+  {
+    "sku": "D-IN-M-HI"
+  },
+  {
+    "sku": "D-IN-M-UT"
+  },
+  {
+    "sku": "D-KS-M-GA"
+  },
+  {
+    "sku": "D-KS-M-TX"
+  },
+  {
+    "sku": "D-KY-M-MT"
+  },
+  {
+    "sku": "D-LA-M-FL"
+  },
+  {
+    "sku": "D-LA-M-TN"
+  },
+  {
+    "sku": "D-MA-M-MS"
+  },
+  {
+    "sku": "D-MD-M-DE"
+  },
+  {
+    "sku": "D-MD-M-SD"
+  },
+  {
+    "sku": "D-ME-M-MO"
+  },
+  {
+    "sku": "D-MI-M-CT"
+  },
+  {
+    "sku": "D-MI-M-SC"
+  },
+  {
+    "sku": "D-MN-M-MN"
+  },
+  {
+    "sku": "D-MO-M-MI"
+  },
+  {
+    "sku": "D-MS-M-CO"
+  },
+  {
+    "sku": "D-MS-M-RI"
+  },
+  {
+    "sku": "D-MT-M-CA"
+  },
+  {
+    "sku": "D-MT-M-PA"
+  },
+  {
+    "sku": "D-NC-M-LA"
+  },
+  {
+    "sku": "D-ND-M-AL"
+  },
+  {
+    "sku": "D-ND-M-ND"
+  },
+  {
+    "sku": "D-NE-M-MA"
+  },
+  {
+    "sku": "D-NH-M-MD"
+  },
+  {
+    "sku": "D-NJ-M-AZ"
+  },
+  {
+    "sku": "D-NJ-M-OK"
+  },
+  {
+    "sku": "D-NM-M-ME"
+  },
+  {
+    "sku": "D-NV-M-AR"
+  },
+  {
+    "sku": "D-NV-M-OR"
+  },
+  {
+    "sku": "D-NY-M-AK"
+  },
+  {
+    "sku": "D-NY-M-OH"
+  },
+  {
+    "sku": "D-OH-M-KY"
+  },
+  {
+    "sku": "D-OH-M-WY"
+  },
+  {
+    "sku": "D-OK-M-NC"
+  },
+  {
+    "sku": "D-OR-M-KS"
+  },
+  {
+    "sku": "D-OR-M-WI"
+  },
+  {
+    "sku": "D-PA-M-NY"
+  },
+  {
+    "sku": "D-RI-M-IA"
+  },
+  {
+    "sku": "D-RI-M-WV"
+  },
+  {
+    "sku": "D-SC-M-NM"
+  },
+  {
+    "sku": "D-SD-M-IN"
+  },
+  {
+    "sku": "D-SD-M-WA"
+  },
+  {
+    "sku": "D-TN-M-NJ"
+  },
+  {
+    "sku": "D-TX-M-IL"
+  },
+  {
+    "sku": "D-TX-M-VA"
+  },
+  {
+    "sku": "D-UT-M-NH"
+  },
+  {
+    "sku": "D-VA-M-NV"
+  },
+  {
+    "sku": "D-VT-M-ID"
+  },
+  {
+    "sku": "D-VT-M-VT"
+  },
+  {
+    "sku": "D-WA-M-HI"
+  },
+  {
+    "sku": "D-WA-M-UT"
+  },
+  {
+    "sku": "D-WI-M-GA"
+  },
+  {
+    "sku": "D-WI-M-TX"
+  },
+  {
+    "sku": "D-WV-M-NE"
+  },
+  {
+    "sku": "D-WY-M-MT"
+  }
+]
