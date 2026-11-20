@@ -20,7 +20,7 @@ def open_photoshop():
 def open_file_in_photoshop():
     # Path to the file you want to open
     script_dir = os.path.dirname(os.path.abspath(__file__))
-    file_path = os.path.join(script_dir, "sticker_test.PSD")
+    file_path = os.path.join(script_dir, "sticker_test.psd")
 
     # check if file exists
     if not os.path.isfile(file_path):
