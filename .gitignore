@@ -1,4 +1,3 @@
-cat > .gitignore <<'EOF'
 # Photoshop and design source files
 *.psd
 *.psb
@@ -7,7 +6,6 @@ cat > .gitignore <<'EOF'
 
 # macOS files
 .DS_Store
-**/.DS_Store
 
 # Python
 __pycache__/
@@ -15,6 +13,9 @@ __pycache__/
 .venv/
 venv/
 
+# Editor settings
+.vscode/
+.idea/
+
 # Development workspace
 sticker_test/
-EOF
