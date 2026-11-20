@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f3efe5">
+  <meta name="description" content="Every Sticker Ever — a playful bumper sticker project exploring all 2,500 pairings of the 50 US states.">
+  <title>Every Sticker Ever — Don't [State] My [State]</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div class="announcement"><span class="announcement-dot"></span> AN EXPERIMENT IN VERY SPECIFIC STATE PRIDE <span class="announcement-index">001—2500</span></div>
+  <header class="site-header">
+    <a class="wordmark" href="#" aria-label="Every Sticker Ever home">EVERY<span>STICKER</span>EVER<span class="wordmark-period">®</span></a>
+    <nav aria-label="Main navigation">
+      <a href="#collection">The collection</a>
+      <a href="#process">How it’s made</a>
+      <a class="nav-cta" href="#about">About the project <span>↗</span></a>
+    </nav>
+    <button class="menu-toggle" aria-label="Open navigation" aria-expanded="false">☰</button>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow"><span>50 STATES</span><i></i><span>2,500 COMBINATIONS</span></p>
+        <h1>DON’T <span class="headline-highlight">[YOUR STATE]</span><br>MY <span class="headline-outline">[MY STATE]</span><span class="hero-star">✳</span></h1>
+        <p class="hero-description">A bumper sticker for every possible pairing of the 50 United States. Because apparently, we all have opinions about everyone else’s state.</p>
+        <div class="hero-actions">
+          <a class="button button-dark" href="#collection">Explore the collection <span>↓</span></a>
+          <a class="text-link" href="#process">See how it works <span>↗</span></a>
+        </div>
+        <div class="hero-footnote"><span class="scribble">A little state-to-state banter.</span><span class="mono">EST. IN THE GARAGE&nbsp; / &nbsp;USA</span></div>
+      </div>
+      <div class="hero-art" aria-label="Three sample bumper sticker designs">
+        <div class="art-stamp">THE<br>50 STATE<br>SERIES</div>
+        <div class="sticker sticker-hero sticker-red"><span class="sticker-small">A FRIENDLY REMINDER</span><strong>DON’T<br>CALIFORNIA<br>MY TEXAS</strong><span class="sticker-bottom">✳ &nbsp; KEEP IT BETWEEN THE LINES &nbsp; ✳</span></div>
+        <div class="sticker sticker-float sticker-blue"><span class="sticker-small">A FRIENDLY REMINDER</span><strong>DON’T<br>NEW YORK<br>MY OREGON</strong><span class="sticker-bottom">✳ &nbsp; KEEP IT BETWEEN THE LINES &nbsp; ✳</span></div>
+        <div class="hero-caption mono">FIG. 01 — THE OPEN ROAD COLLECTION</div>
+        <span class="hero-spark spark-one">✳</span><span class="hero-spark spark-two">✳</span>
+      </div>
+    </section>
+
+    <section class="ticker" aria-label="Project highlights"><div class="ticker-track"><span>50 STATES</span><b>✳</b><span>2,500 PAIRINGS</span><b>✳</b><span>7,500 COLORWAYS</span><b>✳</b><span>ZERO CHILL</span><b>✳</b><span>50 STATES</span><b>✳</b><span>2,500 PAIRINGS</span><b>✳</b><span>7,500 COLORWAYS</span><b>✳</b><span>ZERO CHILL</span><b>✳</b></div></section>
+
+    <section class="collection section-wrap" id="collection">
+      <div class="section-heading">
+        <div><p class="eyebrow">01 / THE COLLECTION</p><h2>Pick a side.<br><span>Any side.</span></h2></div>
+        <p class="section-intro">Every state gets paired with every state. That’s 2,500 combinations, including the ones that hit a little too close to home.</p>
+      </div>
+      <div class="collection-toolbar">
+        <span class="mono">A FEW FAVORITES FROM THE ARCHIVE</span>
+        <div class="color-control" role="group" aria-label="Choose sticker color">
+          <span>COLOR</span>
+          <button class="swatch active" data-color="red" aria-label="Red" aria-pressed="true"></button>
+          <button class="swatch" data-color="blue" aria-label="Blue" aria-pressed="false"></button>
+          <button class="swatch" data-color="black" aria-label="Black" aria-pressed="false"></button>
+        </div>
+      </div>
+      <div class="sticker-grid" id="sticker-grid" aria-live="polite"></div>
+      <div class="collection-bottom"><span class="mono">SHOWING 06 OF 2,500 DESIGNS</span><span>Every pairing has three color options. <b>That’s a lot of opinions.</b></span></div>
+    </section>
+
+    <section class="manifesto">
+      <div class="manifesto-mark">✳</div>
+      <p class="eyebrow">A SMALL IDEA. A LOT OF SPREADSHEETS.</p>
+      <h2>All 50 states.<br><em>All the combinations.</em><br>Absolutely no chill.</h2>
+      <p>It started with a simple format: “Don’t [State] My [State].” Then came the math. Every state paired with every other state (including itself), then three color variations for each design. The result? A catalog that needed a little automation to exist.</p>
+    </section>
+
+    <section class="process section-wrap" id="process">
+      <div class="section-heading">
+        <div><p class="eyebrow">02 / BEHIND THE STICKER</p><h2>Made by hand.<br><span>Scaled by code.</span></h2></div>
+        <p class="section-intro">A creative production workflow built to turn one Photoshop template into thousands of consistent, catalog-ready designs.</p>
+      </div>
+      <div class="process-grid">
+        <article class="process-card process-card-dark"><span class="step-number">01</span><div class="process-icon">▤</div><h3>Generate the pairings</h3><p>Python builds the complete set of state combinations and assigns each design a unique SKU.</p><span class="process-tag">PYTHON · CSV</span></article>
+        <article class="process-card process-card-yellow"><span class="step-number">02</span><div class="process-icon">✳</div><h3>Automate the artwork</h3><p>AppleScript and Photoshop update named text layers, then save each variation from a reusable PSD template.</p><span class="process-tag">PHOTOSHOP · APPLESCRIPT</span></article>
+        <article class="process-card process-card-paper"><span class="step-number">03</span><div class="process-icon">▦</div><h3>Build the catalog</h3><p>A Python script turns the source data into WooCommerce parent products and red, blue, and black variations.</p><span class="process-tag">PYTHON · WOOCOMMERCE</span></article>
+      </div>
+      <div class="process-note"><span class="note-star">✳</span><p><b>The fun part:</b> one design template, 2,500 text combinations, three colorways each. The computer handles the repetitive work; the idea stays delightfully simple.</p></div>
+    </section>
+
+    <section class="numbers">
+      <div class="numbers-heading"><p class="eyebrow">03 / THE NUMBERS</p><h2>It adds up.</h2></div>
+      <div class="number-grid">
+        <div><strong>50</strong><span>STATES IN THE MIX</span></div>
+        <div><strong>2,500</strong><span>UNIQUE PAIRINGS</span></div>
+        <div><strong>3</strong><span>COLOR VARIATIONS</span></div>
+        <div><strong>7,500</strong><span>TOTAL SKU VARIATIONS</span></div>
+      </div>
+    </section>
+
+    <section class="about section-wrap" id="about">
+      <div class="about-copy"><p class="eyebrow">04 / THE PROJECT</p><h2>Not just stickers.<br><span>A production system.</span></h2><p>Every Sticker Ever is an independent creative-automation project exploring what happens when a simple visual idea meets a very large set of data. It brings together graphic design, image production, scripting, and ecommerce catalog generation.</p><p class="availability-note"><span class="availability-dot"></span> THIS IS A PORTFOLIO / EXPERIMENTAL PROJECT. THE STICKERS ARE NOT CURRENTLY FOR SALE.</p></div>
+      <div class="about-aside"><div class="aside-sticker">DON’T<br><b>STOP</b><br>MAKING<br>THINGS<span>✳</span></div><span class="mono">A PROJECT ABOUT MAKING MORE WITH LESS.</span></div>
+    </section>
+  </main>
+
+  <footer class="site-footer"><a class="wordmark footer-wordmark" href="#">EVERY<span>STICKER</span>EVER<span class="wordmark-period">®</span></a><span class="mono">BUILT WITH CURIOSITY & A QUESTIONABLE NUMBER OF CSV ROWS.</span><a class="back-top" href="#">BACK TO TOP ↑</a></footer>
+  <script src="/script.js"></script>
+</body>
+</html>
